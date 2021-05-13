@@ -1,0 +1,87 @@
+import {StyleSheet} from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgb(255,255,255)',
+  },
+  heading: {
+    fontSize: 32,
+    width: 160,
+    height: 42,
+    fontFamily: 'DMSans-Bold',
+    fontWeight: '700',
+    color: '#005592',
+    marginTop: hp(9.855),
+    marginLeft: wp(28.8),
+  },
+  google: {
+    padding: 12.5,
+    borderColor: 'rgb(66,133,244)',
+    backgroundColor: 'rgb(64,133,244)',
+    alignItems: 'center',
+    textAlign: 'center',
+    fontFamily: 'Roboto-Medium',
+    borderRadius: 2,
+    fontSize: 16,
+    color: 'rgb(255,255,255)',
+    height: 48,
+    width: 320,
+    marginTop: hp(5.911),
+    marginLeft: wp(7.73),
+    marginRight: wp(7.2),
+  },
+
+  input: {
+    width: 320,
+    height: 48,
+    padding: 10,
+    fontFamily: 'NunitoSans-SemiBold',
+    fontSize: 16,
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#dfe3eb',
+    backgroundColor: '#dfe3eb',
+    marginTop: hp(2.955),
+    marginLeft: wp(7.466),
+  },
+  input1: {
+    width: 320,
+    height: 48,
+    padding: 10,
+    fontFamily: 'NunitoSans-SemiBold',
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#dfe3eb',
+    backgroundColor: '#dfe3eb',
+    marginTop: hp(1.477),
+    marginBottom: hp(-2.97),
+    marginLeft: wp(7.466),
+    marginRight: wp(7.2),
+  },
+  policyBlock: {
+    flexDirection: 'row',
+    fontFamily: 'NunitoSans',
+    height: 40,
+    width: 300,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: hp(-24.65),
+    marginTop: wp(48),
+  },
+  focusedTextInput: {
+    borderColor: 'rgb(223,227,235)',
+    backgroundColor: 'white',
+  },
+
+  alignText: {
+    justifyContent: 'flex-end',
+    marginBottom: 5,
+    fontSize: 16,
+    color: '#414a54',
+  },
+});
