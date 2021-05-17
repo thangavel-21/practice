@@ -57,22 +57,22 @@ export default class Login extends Component {
   setFocus1(hasFocus1) {
     this.setState({hasFocus1});
   }
-  onChangeemail = email => {
-    if (email !== 'eve.holt@reqres.in') {
-      this.setState({isemail: true});
-    } else {
-      this.setState({isemail: false});
-    }
-    this.setState({email});
-  };
-  onChangepassword = password => {
-    if (password !== 'cityslicka') {
-      this.setState({ispassword: true});
-    } else {
-      this.setState({ispassword: false});
-    }
-    this.setState({password});
-  };
+  // onChangeemail = email => {
+  //   if (email !== 'eve.holt@reqres.in') {
+  //     this.setState({isemail: true});
+  //   } else {
+  //     this.setState({isemail: false});
+  //   }
+  //   this.setState({email});
+  // };
+  // onChangepassword = password => {
+  //   if (password !== 'cityslicka') {
+  //     this.setState({ispassword: true});
+  //   } else {
+  //     this.setState({ispassword: false});
+  //   }
+  //   this.setState({password});
+  // };
   // onLogin() {
   //     const { email, password } = this.state;
   //     this.props.navigation.navigate(Navkeys.NEXTPAGE)
@@ -89,15 +89,35 @@ export default class Login extends Component {
   //     }
   //     // Alert.alert('Credentials', `${username} + ${password}`);
   // }
+  onChangeemail = email => {
+    if (!email) {
+      this.setState({isemail: true});
+    } else {
+      this.setState({isemail: false});
+    }
+    this.setState({email});
+  }
+  onChangepassword = password => {
+      if (!password) {
+        this.setState({ispassword: true});
+      } else {
+        this.setState({ispassword: false});
+      }
+      this.setState({password});
+    }
   _Login = async () => {
     let params = {
       email: this.state.email,
       password: this.state.password,
     };
-    let data = await login(params);
-    console.log(data);
-    Alert.alert('loggined successfully');
-    this.props.navigation.navigate(Navkeys.NEXTPAGE);
+    //let data = await login(params);
+    login (params, (failurefunc) =>{
+      console.log('failureFunc', failurefunc);
+      Alert.alert(failurefunc)
+    },(succfun)=>{
+      console.log('succFunc', succfun);
+      this.props.navigation.navigate(Navkeys.NEXTPAGE)
+    })
   };
   render() {
     return (

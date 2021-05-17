@@ -4,4 +4,5 @@ export default {
   NEXTPAGE: 'next',
   SIGNUP: 'signup',
   FORGOT: 'forgot',
+  IMAGE:'image'
 };
