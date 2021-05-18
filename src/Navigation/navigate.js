@@ -8,9 +8,7 @@ import Navkeys from '../constant/Navkeys';
 import signup from '../signup/signup';
 import forgot from '../forgot/forgot';
 import image from '../updates/image';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {store, persistor} from '../redux/store/store';
+
 
 const Stack = createStackNavigator();
 
