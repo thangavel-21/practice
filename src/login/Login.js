@@ -13,16 +13,10 @@ import {
   OutlinedTextField,
 } from 'react-native-material-textfield';
 import styles from './loginStyle';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import Navkeys from '../constant/Navkeys';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {postApi} from '../api/apicall';
 import {login} from '../api/user';
-
-// const userInfo = { email: 'vel21@gmail.com', password: 'Vel@21' }
+import loginString from '../constant/loginStrings'
 
 export default class Login extends Component {
   state = {
@@ -35,74 +29,60 @@ export default class Login extends Component {
     hasFocus1: false,
   };
 
-  // handleEmail = emailInput => {
-  //     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  //     if (reg.test(emailInput) === false) {
-  //         this.setState({ email: emailInput });
-  //         this.setState({emailBorder: 1});
-
-  //     } else {
-  //         this.setState({ email: emailInput });
-  //         this.setState({emailBorder: 0});
-
-  //     }
-  // };
-
-  // handlePassword = passwordInput => {
-  //     this.setState({ password: passwordInput });
-  // };
   setFocus(hasFocus) {
     this.setState({hasFocus});
   }
   setFocus1(hasFocus1) {
     this.setState({hasFocus1});
   }
+   /**
+   * check and updates the state object Email Id
+   */
+
   onChangeemail = email => {
-    if (email !== 'eve.holt@reqres.in') {
+    if (!email) {
       this.setState({isemail: true});
     } else {
       this.setState({isemail: false});
     }
     this.setState({email});
   };
+  /**
+   * check and updates the state object Password
+   */
   onChangepassword = password => {
-    if (password !== 'cityslicka') {
+    if (!password) {
       this.setState({ispassword: true});
     } else {
       this.setState({ispassword: false});
     }
     this.setState({password});
   };
-  // onLogin() {
-  //     const { email, password } = this.state;
-  //     this.props.navigation.navigate(Navkeys.NEXTPAGE)
-  // }
-  // _Login = async () => {
-  //     //const {email, password} = this.state;
-  //     if (userInfo.email === this.state.email && userInfo.password === this.state.password) {
-  //         //Alert.alert('Logged in ');
-  //         await AsyncStorage.setItem('isLoggedIn', '1');
-  //         this.props.navigation.navigate(Navkeys.NEXTPAGE);
-  //     }
-  //     else {
-  //         Alert.alert('email and password is incorrect');
-  //     }
-  //     // Alert.alert('Credentials', `${username} + ${password}`);
-  // }
   _Login = async () => {
     let params = {
       email: this.state.email,
       password: this.state.password,
     };
-    let data = await login(params);
-    console.log(data);
-    Alert.alert('loggined successfully');
-    this.props.navigation.navigate(Navkeys.NEXTPAGE);
+     
+ /**
+   *  check the user field conditions User Email and Password
+   */
+    login(
+      params,
+      failurefunc => {
+        console.log('failureFunc', failurefunc);
+        Alert.alert(failurefunc);
+      },
+      succfun => {
+        console.log('succFunc', succfun);
+        this.props.navigation.navigate(Navkeys.NEXTPAGE);
+      },
+    );
   };
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Calib CRM</Text>
+        <Text style={styles.heading}>{loginString.CALIB_CRM}</Text>
 
         <TouchableOpacity
           onPress={() => {
@@ -110,76 +90,25 @@ export default class Login extends Component {
               this.props.navigation.navigate('GOOGLE');
             }
           }}>
-          <Text style={styles.google}>Continue With Google</Text>
+          <Text style={styles.google}>{loginString.CONTINUE_WITH_GOOGLE}</Text>
           <Image
             source={require('../../src/constant/g.png')}
-            style={{
-              marginTop: hp(-6.2),
-              marginBottom: hp(5.48),
-              marginLeft: hp(3.85),
-              width: 28,
-              height: 18,
-              borderRadius: 2,
-              padding: 22.5,
-              backgroundColor: 'rgb(255,255,255)',
-            }}
-            resizeMode="stretch"
+            style={styles.googleImg}
           />
         </TouchableOpacity>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: -10,
-            marginBottom: 7,
-          }}>
-          <View
-            style={{
-              paddingStart: 50,
-              marginLeft: 28,
-              flexDirection: 'row',
-              width: 150,
-              height: 1.5,
-              backgroundColor: 'rgb(223,227,235)',
-            }}
-          />
+        <View style={styles.view}>
+          <View style={styles.view1} />
           <View>
-            <Text
-              style={{
-                paddingStart: 20,
-                marginStart: -19,
-                fontFamily: 'NunitoSans-Regular',
-                width: 50,
-                textAlign: 'center',
-                color: 'rgb(110,116,124)',
-              }}>
-              OR
-            </Text>
+            <Text style={styles.or}>{loginString.OR}</Text>
           </View>
-          <View
-            style={{
-              paddingRight: 60,
-              marginRight: 28,
-              flexDirection: 'row',
-              width: 136,
-              height: 1.5,
-              backgroundColor: 'rgb(223,227,235)',
-            }}
-          />
+          <View style={styles.or1} />
         </View>
 
-        {/* <TextInput
-                    value={this.state.email}
-                    onChangeText={this.onchangeemail}
-                    placeholder='Email'
-                    style={[styles.input, this.state.isemail && {backgroundColor: 'rgb(255,255,255)', borderColor:'rgb(250,62,62)' }]}
-                /> 
-                 {this.state.isemail && <Text style={{ paddingLeft:27,fontSize: 12, color: '#fa3e3e', width: 320, height: 16 }}>Enter valid email id</Text>}  */}
-        <FilledTextField
-          label="Email"
+        {/* <FilledTextField
+          label={loginString.EMAIL}
           value={this.state.email}
-          onChangeText={this.onChangeemail}
+          onChangeText={()=>this.onChangeemail()}
           onFocus={this.setFocus.bind(this, true)}
           tintColor={this.state.isemail ? 'rgb(250,62,62)' : 'rgb(110,116,124)'}
           lineWidth={0}
@@ -206,13 +135,13 @@ export default class Login extends Component {
               width: 320,
               height: 16,
             }}>
-            Enter valid email id
+            {loginString.ENTER_VALID_EMAIL}
           </Text>
-        )}
-        <FilledTextField
-          label="Password"
+        )} */}
+        {/* <FilledTextField
+          label={loginString.PASSWORD}
           value={this.state.password}
-          onChangeText={this.onChangepassword}
+          onChangeText={()=>this.onChangepassword()}
           onFocus={this.setFocus1.bind(this, true)}
           secureTextEntry={true}
           tintColor={
@@ -232,15 +161,9 @@ export default class Login extends Component {
               borderColor: 'rgb(250,62,62)',
             },
           ]}
-        />
-        {/* <TextInput
-                    value={this.state.password}
-                    onChangeText={this.onChangepassword}
-                    placeholder='Password'
-                    secureTextEntry={true}
-                    style={[styles.input1, this.state.ispassword && {backgroundColor: 'rgb(255,255,255)', borderColor:'rgb(250,62,62)' }]}
-                /> */}
-        <View>
+        /> */}
+       
+        {/* <View>
           <TouchableOpacity
             onPress={() => {
               {
@@ -248,19 +171,12 @@ export default class Login extends Component {
               }
             }}>
             <Image
-              style={{
-                flexDirection: 'row',
-                marginTop: hp(-5.5),
-                marginBottom: hp(5.48),
-                marginLeft: hp(41.5),
-                width: 24,
-                height: 24,
-              }}
+              style={styles.eye}
               source={require('../../src/constant/eye1.png')}
             />
           </TouchableOpacity>
-        </View>
-        {this.state.ispassword && (
+        </View> */}
+        {/* {this.state.ispassword && (
           <Text
             style={{
               paddingLeft: 27,
@@ -270,11 +186,11 @@ export default class Login extends Component {
               width: 320,
               height: 16,
             }}>
-            Enter valid password
+            {loginString.ENTER_VALID_PASSWORD}
           </Text>
-        )}
+        )} */}
 
-        <View style={{paddingLeft: 228, marginTop: -16, paddingBottom: 90}}>
+        <View style={styles.forgot}>
           <TouchableOpacity
             onPress={() => {
               {
@@ -282,30 +198,15 @@ export default class Login extends Component {
               }
             }}>
             <Text
-              style={{
-                fontFamily: 'NunitoSans-SemiBold',
-                paddingTop: -30,
-                fontSize: 14,
-                textAlignAlign: 'Right',
-                color: '#0e7ebf',
-              }}>
-              {' '}
-              Forgot Password?{' '}
+              style={styles.forgot1}>
+             {loginString.FORGOT_PASSWORD}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: hp(-11), paddingBottom: 20}}>
+        <View style={styles.loginAlign}>
           <TouchableOpacity
             style={[
-              {
-                marginLeft: wp(7.466),
-                marginRight: wp(7.2),
-                height: 40,
-                width: 320,
-                backgroundColor: 'rgb(232,233,234)',
-                textAlign: 'center',
-                borderRadius: 4,
-              },
+              styles.login1,
               this.state.email &&
                 this.state.password && {backgroundColor: 'rgb(251,112,0)'},
             ]}
@@ -314,31 +215,19 @@ export default class Login extends Component {
             }}>
             <Text
               style={[
-                {
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  fontFamily: 'NunitoSans-SemiBold',
-                  fontSize: 16,
-                  color: 'rgb(154,159,164)',
-                  height: 72,
-                  marginTop: 6.2,
-                },
+                styles.login,
                 this.state.email &&
                   this.state.password && {color: 'rgb(255,255,255)'},
               ]}>
-              Log In
+             {loginString.LOG_IN}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.policyBlock}>
-          <View style={{marginTop: hp(0), paddingLeft: 32}}>
+          <View style={styles.dontAlign}>
             <Text
-              style={{
-                color: 'rgb(65,74,84)',
-                fontFamily: 'NunitoSans-SemiBold',
-                fontSize: 16,
-              }}>
-              Don't have an account?{' '}
+              style={styles.dont}>
+              {loginString.DONT_HAVE_ACCOUNT}
             </Text>
           </View>
           <View>
@@ -349,25 +238,11 @@ export default class Login extends Component {
                 }
               }}>
               <Text
-                style={{
-                  marginTop: hp(0),
-                  paddingLeft: 5,
-                  fontFamily: 'NunitoSans-SemiBold',
-                  fontWeight: '600',
-                  fontSize: 16,
-                  color: 'rgb(50,145,200)',
-                }}>
-                Sign up
+                style={styles.signup}>
+               {loginString.SIGN_UP}
               </Text>
               <Image
-                style={{
-                  flexDirection: 'row',
-                  marginTop: hp(-2.25),
-                  marginBottom: hp(5.48),
-                  marginLeft: hp(8.5),
-                  width: 14,
-                  height: 14,
-                }}
+                style={styles.signupImg}
                 source={require('../../src/constant/launch24Px.png')}
               />
             </TouchableOpacity>
