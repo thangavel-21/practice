@@ -80,5 +80,40 @@ export default StyleSheet.create({
     marginTop:10,
     paddingLeft:25
    },
+   validUser:{
+    paddingLeft: 15,
+    fontSize: 12,
+    color: '#fa3e3e',
+    width: 320,
+    height: 16,
+  },
+  validPhone:
+{
+  paddingLeft: 15,
+  fontSize: 12,
+  color: '#fa3e3e',
+  width: 320,
+  height: 16,
+},
+   dropDown:
+   {
+    width: 280,
+    height: 80,
+    borderColor: 'gray',
+    borderWidth: 2,
+  },
+  dropDownText:
+  {
+    fontSize: 14,
+    fontWeight: '600',
+    fontFamily: 'NunitoSans',
+  },
+  textStyle:
+  {
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: 'NunitoSans',
+    color: 'rgb(110,116,124)',
+  }
   
 })

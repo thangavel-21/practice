@@ -7,7 +7,7 @@ import RNRestart from 'react-native-restart';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/action/action';
-import {useIsFocused} from '@react-navigation/core';
+import imageString from '../constant/imageString'
 
 class image extends Component {
   constructor(props) {
@@ -28,6 +28,9 @@ class image extends Component {
       },
     };
   }
+  /**
+  * check and updates the state actionsobject userName
+  */
   onChangeUser = userName => {
     if (!userName) {
       this.setState({isUser: true});
@@ -38,6 +41,9 @@ class image extends Component {
       saveData: {...this.state.saveData, userName: userName},
     });
   };
+   /**
+  * check and updates the state actionsobject Address
+  */
   onChangeAddress = address => {
     if (!address) {
       this.setState({isAddress: true});
@@ -48,7 +54,9 @@ class image extends Component {
       saveData: {...this.state.saveData, address: address},
     });
   };
-
+ /**
+  * check and updates the state actionsobject Phone Number
+  */
   onChangePhone = phoneNumber => {
     const numberLength = phoneNumber.length.toString();
     if (!phoneNumber || numberLength < 10 || numberLength > 10) {
@@ -61,6 +69,9 @@ class image extends Component {
     });
   };
 
+ /**
+  * check and updates the state of User Date Of Birth
+  */
   openCalender = () => {
     this.setState({
       isShowCalender: true,
@@ -90,6 +101,9 @@ class image extends Component {
     });
     console.log('user cancel date picker');
   };
+  /**
+  * check and updates the state of User Image 
+  */
   handleChoosePhoto = () => {
     let options = {
       title: 'Select Avatar',
@@ -123,11 +137,16 @@ class image extends Component {
       }
     });
   };
+  /**
+  * Restart An Application
+  */
   onButtonClick = () => {
    // RNRestart.Restart();
    NativeModules.DevSettings.reload();
   };
-
+ /**
+   * On user Save
+   */
   onSave() {
     if (
       this.state.saveData.userName &&
@@ -147,63 +166,49 @@ class image extends Component {
       this.props.setUserDetails(userObj);
       
 
-      //Alert.alert("Successfullly Login");
+     
     } else {
       Alert.alert('Enter valid fields');
     }
-    // RNRestart.Restart(); 
-    //NativeModules.DevSettings.reload();
-  
+    
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>UPLOAD DETAILS</Text>
+        <Text style={styles.text}>{imageString.UPLOAD_DETAILS}</Text>
         <TextInput
           value={this.state.saveData.userName}
           onChangeText={this.onChangeUser}
-          placeholder="UserName"
+          placeholder={imageString.USERNAME}
           placeholderTextColor="rgb(110,116,124)"
           style={styles.input}
         />
         {this.state.isUser && (
           <Text
-            style={{
-              paddingLeft: 15,
-              fontSize: 12,
-              color: '#fa3e3e',
-              width: 320,
-              height: 16,
-            }}>
-            Enter UserName
+            style={styles.validUser}>
+            {imageString.ENTER_USER_NAME}
           </Text>
         )}
 
         <TextInput
           value={this.state.saveData.phoneNumber}
           onChangeText={this.onChangePhone}
-          placeholder="PhoneNumber"
+          placeholder={imageString.PHONENUMBER}
           placeholderTextColor="rgb(110,116,124)"
           keyboardType="phone-pad"
           style={styles.input}
         />
         {this.state.isPhone && (
           <Text
-            style={{
-              paddingLeft: 15,
-              fontSize: 12,
-              color: '#fa3e3e',
-              width: 320,
-              height: 16,
-            }}>
-            Enter valid number
+            style={styles.validPhone}>
+            {imageString.ENTER_USER_NUMBER}
           </Text>
         )}
         <TextInput
           value={this.state.saveData.address}
           onChangeText={this.onChangeAddress}
-          placeholder="Address"
+          placeholder={imageString.ADDRESS}
           placeholderTextColor="rgb(110,116,124)"
           keyboardType="default"
           style={styles.input}
@@ -213,23 +218,9 @@ class image extends Component {
           defaultValue={'Choose Language'}
           style={styles.input}
           onSelect={this.onChangeLanguage}
-          dropdownStyle={{
-            width: 280,
-            height: 80,
-            borderColor: 'gray',
-            borderWidth: 2,
-          }}
-          dropdownTextStyle={{
-            fontSize: 14,
-            fontWeight: '600',
-            fontFamily: 'NunitoSans',
-          }}
-          textStyle={{
-            fontSize: 14,
-            fontWeight: '500',
-            fontFamily: 'NunitoSans',
-            color: 'rgb(110,116,124)',
-          }}
+          dropdownStyle={styles.dropDown}
+          dropdownTextStyle={styles.dropDownText}
+          textStyle={styles.textStyle}
         />
         <TouchableOpacity style={styles.touch} onPress={this.openCalender}>
           <Text style={styles.text2}>{this.state.saveData.dob.toString()}</Text>
@@ -247,10 +238,10 @@ class image extends Component {
           <Text style={styles.text2}>{this.state.saveData.fileUri} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.touch1} onPress={this.onButtonClick}>
-          <Text style={styles.text3}>Cancel </Text>
+          <Text style={styles.text3}>{imageString.CANCEL} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.touch2} onPress={() => this.onSave()}>
-          <Text style={styles.text3}>Save</Text>
+          <Text style={styles.text3}>{imageString.SAVE}</Text>
         </TouchableOpacity>
       </View>
     );

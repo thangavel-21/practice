@@ -9,7 +9,6 @@ const initialState = {
       },
 };
 const createReducer = (state = initialState, action) => {
-  //console.log(action)
 switch(action.type) {
 case SET_USER_DETAILS:
 return {
