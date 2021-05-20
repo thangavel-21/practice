@@ -7,18 +7,19 @@ import {
   Text,
   Alert,
 } from 'react-native';
-import { TextField, FilledTextField, OutlinedTextField } from 'rn-material-ui-textfield'
+import {
+  TextField,
+  FilledTextField,
+  OutlinedTextField,
+} from 'rn-material-ui-textfield';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
 import styles from './loginStyle';
 import Navkeys from '../constant/Navkeys';
-//import {postApi} from '../api/apicall';
-//import {login} from '../api/user';
 import {login} from '../saga/loginsaga';
-import loginString from '../constant/loginStrings'
+import loginString from '../constant/loginStrings';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/action/action';
 
@@ -39,7 +40,7 @@ class Login extends Component {
   setFocus1(hasFocus1) {
     this.setState({hasFocus1});
   }
-   /**
+  /**
    * check and updates the state object Email Id
    */
 
@@ -70,26 +71,16 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
     };
-   
-     
-    // login(
-    //   params,
-    //   failurefunc => {
-    //     console.log('failureFunc', failurefunc);
-    //     Alert.alert(failurefunc);
-    //   },
-    //   succfun => {
-    //     console.log('succFunc', succfun);
-    //     this.props.navigation.navigate(Navkeys.NEXTPAGE);
-    //   },
-    // );
-    this.props.userLoginApi(params,(failurefunc)=>{
-      console.log('failurefunc',failurefunc)
-      Alert.alert(failurefunc)
-    },(succfun)=>{
-      console.log('successs')
+
+    this.props.userLoginApi(
+      params,
+      failurefunc => {
+        Alert.alert(failurefunc);
+      },
+      succfun => {
         this.props.navigation.navigate(Navkeys.NEXTPAGE);
-  })
+      },
+    );
   };
   render() {
     return (
@@ -116,8 +107,6 @@ class Login extends Component {
           </View>
           <View style={styles.or1} />
         </View>
-        
-         
 
         <FilledTextField
           label={loginString.EMAIL}
@@ -175,9 +164,9 @@ class Login extends Component {
               borderColor: 'rgb(250,62,62)',
             },
           ]}
-        /> 
-       
-         <View>
+        />
+
+        <View>
           <TouchableOpacity
             onPress={() => {
               {
@@ -189,7 +178,7 @@ class Login extends Component {
               source={require('../../src/constant/eye1.png')}
             />
           </TouchableOpacity>
-        </View> 
+        </View>
         {this.state.ispassword && (
           <Text
             style={{
@@ -202,7 +191,7 @@ class Login extends Component {
             }}>
             {loginString.ENTER_VALID_PASSWORD}
           </Text>
-        )} 
+        )}
 
         <View style={styles.forgot}>
           <TouchableOpacity
@@ -211,10 +200,7 @@ class Login extends Component {
                 this.props.navigation.navigate(Navkeys.FORGOT);
               }
             }}>
-            <Text
-              style={styles.forgot1}>
-             {loginString.FORGOT_PASSWORD}
-            </Text>
+            <Text style={styles.forgot1}>{loginString.FORGOT_PASSWORD}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.loginAlign}>
@@ -233,16 +219,13 @@ class Login extends Component {
                 this.state.email &&
                   this.state.password && {color: 'rgb(255,255,255)'},
               ]}>
-             {loginString.LOG_IN}
+              {loginString.LOG_IN}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.policyBlock}>
           <View style={styles.dontAlign}>
-            <Text
-              style={styles.dont}>
-              {loginString.DONT_HAVE_ACCOUNT}
-            </Text>
+            <Text style={styles.dont}>{loginString.DONT_HAVE_ACCOUNT}</Text>
           </View>
           <View>
             <TouchableOpacity
@@ -251,10 +234,7 @@ class Login extends Component {
                   this.props.navigation.navigate(Navkeys.SIGNUP);
                 }
               }}>
-              <Text
-                style={styles.signup}>
-               {loginString.SIGN_UP}
-              </Text>
+              <Text style={styles.signup}>{loginString.SIGN_UP}</Text>
               <Image
                 style={styles.signupImg}
                 source={require('../../src/constant/launch24Px.png')}
@@ -266,9 +246,9 @@ class Login extends Component {
     );
   }
 }
-export const mapDispatchToProps = (dispatch) => ({
-  userLoginApi: (params,failurefunc,succfun) => dispatch(UserActions.userLoginApi(params,failurefunc,succfun))
-})
-
+export const mapDispatchToProps = dispatch => ({
+  userLoginApi: (params, failurefunc, succfun) =>
+    dispatch(UserActions.userLoginApi(params, failurefunc, succfun)),
+});
 
 export default connect(null, mapDispatchToProps)(Login);

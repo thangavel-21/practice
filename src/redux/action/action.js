@@ -11,10 +11,10 @@ export function userLoginApi(params,failurefunc,succfun) {
     params,failurefunc,succfun
   };
 }
-export function setToken(successFunc) {
+export function setToken(userToken) {
   return {
       type: types.SET_USER_TOKEN,
-      payload: successFunc
+      payload: userToken
   }
 }
 
