@@ -11,14 +11,19 @@ import {
   TextField,
   FilledTextField,
   OutlinedTextField,
-} from 'react-native-material-textfield';
+} from 'rn-material-ui-textfield';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import styles from './loginStyle';
 import Navkeys from '../constant/Navkeys';
-import {postApi} from '../api/apicall';
-import {login} from '../api/user';
-import loginString from '../constant/loginStrings'
+import {login} from '../saga/loginsaga';
+import loginString from '../constant/loginStrings';
+import {connect} from 'react-redux';
+import * as UserActions from '../redux/action/action';
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     email: '',
     password: '',
@@ -35,7 +40,7 @@ export default class Login extends Component {
   setFocus1(hasFocus1) {
     this.setState({hasFocus1});
   }
-   /**
+  /**
    * check and updates the state object Email Id
    */
 
@@ -58,23 +63,21 @@ export default class Login extends Component {
     }
     this.setState({password});
   };
+  /**
+   *  check the user field conditions User Email and Password
+   */
   _Login = async () => {
     let params = {
       email: this.state.email,
       password: this.state.password,
     };
-     
- /**
-   *  check the user field conditions User Email and Password
-   */
-    login(
+
+    this.props.userLoginApi(
       params,
       failurefunc => {
-        console.log('failureFunc', failurefunc);
         Alert.alert(failurefunc);
       },
       succfun => {
-        console.log('succFunc', succfun);
         this.props.navigation.navigate(Navkeys.NEXTPAGE);
       },
     );
@@ -105,10 +108,10 @@ export default class Login extends Component {
           <View style={styles.or1} />
         </View>
 
-        {/* <FilledTextField
+        <FilledTextField
           label={loginString.EMAIL}
           value={this.state.email}
-          onChangeText={()=>this.onChangeemail()}
+          onChangeText={this.onChangeemail}
           onFocus={this.setFocus.bind(this, true)}
           tintColor={this.state.isemail ? 'rgb(250,62,62)' : 'rgb(110,116,124)'}
           lineWidth={0}
@@ -137,11 +140,11 @@ export default class Login extends Component {
             }}>
             {loginString.ENTER_VALID_EMAIL}
           </Text>
-        )} */}
-        {/* <FilledTextField
+        )}
+        <FilledTextField
           label={loginString.PASSWORD}
           value={this.state.password}
-          onChangeText={()=>this.onChangepassword()}
+          onChangeText={this.onChangepassword}
           onFocus={this.setFocus1.bind(this, true)}
           secureTextEntry={true}
           tintColor={
@@ -161,9 +164,9 @@ export default class Login extends Component {
               borderColor: 'rgb(250,62,62)',
             },
           ]}
-        /> */}
-       
-        {/* <View>
+        />
+
+        <View>
           <TouchableOpacity
             onPress={() => {
               {
@@ -175,8 +178,8 @@ export default class Login extends Component {
               source={require('../../src/constant/eye1.png')}
             />
           </TouchableOpacity>
-        </View> */}
-        {/* {this.state.ispassword && (
+        </View>
+        {this.state.ispassword && (
           <Text
             style={{
               paddingLeft: 27,
@@ -188,7 +191,7 @@ export default class Login extends Component {
             }}>
             {loginString.ENTER_VALID_PASSWORD}
           </Text>
-        )} */}
+        )}
 
         <View style={styles.forgot}>
           <TouchableOpacity
@@ -197,10 +200,7 @@ export default class Login extends Component {
                 this.props.navigation.navigate(Navkeys.FORGOT);
               }
             }}>
-            <Text
-              style={styles.forgot1}>
-             {loginString.FORGOT_PASSWORD}
-            </Text>
+            <Text style={styles.forgot1}>{loginString.FORGOT_PASSWORD}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.loginAlign}>
@@ -219,16 +219,13 @@ export default class Login extends Component {
                 this.state.email &&
                   this.state.password && {color: 'rgb(255,255,255)'},
               ]}>
-             {loginString.LOG_IN}
+              {loginString.LOG_IN}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.policyBlock}>
           <View style={styles.dontAlign}>
-            <Text
-              style={styles.dont}>
-              {loginString.DONT_HAVE_ACCOUNT}
-            </Text>
+            <Text style={styles.dont}>{loginString.DONT_HAVE_ACCOUNT}</Text>
           </View>
           <View>
             <TouchableOpacity
@@ -237,10 +234,7 @@ export default class Login extends Component {
                   this.props.navigation.navigate(Navkeys.SIGNUP);
                 }
               }}>
-              <Text
-                style={styles.signup}>
-               {loginString.SIGN_UP}
-              </Text>
+              <Text style={styles.signup}>{loginString.SIGN_UP}</Text>
               <Image
                 style={styles.signupImg}
                 source={require('../../src/constant/launch24Px.png')}
@@ -252,3 +246,9 @@ export default class Login extends Component {
     );
   }
 }
+export const mapDispatchToProps = dispatch => ({
+  userLoginApi: (params, failurefunc, succfun) =>
+    dispatch(UserActions.userLoginApi(params, failurefunc, succfun)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
