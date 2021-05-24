@@ -22,7 +22,7 @@ import {login} from '../saga/loginsaga';
 import loginString from '../constant/loginStrings';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/action/action';
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 class Login extends Component {
   state = {
     email: '',
@@ -33,7 +33,13 @@ class Login extends Component {
     hasFocus: false,
     hasFocus1: false,
   };
+  // componentDidMount() {
+  //   GoogleSignin.configure({
+  //    webClientId:"107587682355-55oh4o0t9pcp9bf3lveff8u0l4hl21av.apps.googleusercontent.com",
+  //   });
+  // }
 
+  
   setFocus(hasFocus) {
     this.setState({hasFocus});
   }
@@ -78,7 +84,7 @@ class Login extends Component {
         Alert.alert(failurefunc);
       },
       succfun => {
-        this.props.navigation.navigate(Navkeys.NEXTPAGE);
+        this.props.navigation.navigate(Navkeys.GPS);
       },
     );
   };

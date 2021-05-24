@@ -12,6 +12,10 @@ const api = create({
 function postApi(endpoint, data) {
   return api.post(endpoint, data);
 }
+function getApi(endpoint, data) {
+  return api.get(endpoint, data);
+}
 export const Apiservice = {
   postApi,
+  getApi
 };

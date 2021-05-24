@@ -12,3 +12,13 @@ export function* login(data) {
     data.failurefunc(response.data.error);
   }
 }
+export function* list(data) {
+  console.log('data',data)
+  let list = yield call(Apiservice.getApi, api.PAGE+data.page);
+  console.log('list',list)
+  if (list.status === 200) {
+    data.succfun(list.data);
+  } else {
+    data.failurefunc(list.data.error);
+  }
+}

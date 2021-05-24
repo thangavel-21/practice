@@ -9,5 +9,6 @@ export default {
     CONTINUE_WITH_GOOGLE:'Continue With Google',
     FORGOT_PASSWORD:' Forgot Password?',
     DONT_HAVE_ACCOUNT:"Don't have an account?",
-    SIGN_UP:' Sign up'
+    SIGN_UP:' Sign up',
+    WEB_CLIENT_ID:"107587682355-55oh4o0t9pcp9bf3lveff8u0l4hl21av.apps.googleusercontent.com",
 }

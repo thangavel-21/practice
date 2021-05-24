@@ -17,4 +17,10 @@ export function setToken(userToken) {
       payload: userToken
   }
 }
+export function investorList(page,failurefunc,succfun) {
+  return {
+      type: types.SET_USER_LIST,
+      page,failurefunc,succfun
+  }
+}
 

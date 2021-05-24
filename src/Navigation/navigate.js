@@ -8,6 +8,7 @@ import Navkeys from '../constant/Navkeys';
 import signup from '../signup/signup';
 import forgot from '../forgot/forgot';
 import image from '../updates/image';
+import gps from '../login/gps'
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,11 @@ function navigate() {
           name={Navkeys.LOGIN}
           options={{headerShown: false}}
           component={Login}
+        />
+        <Stack.Screen
+          name={Navkeys.GPS}
+          options={{headerShown: false}}
+          component={gps}
         />
         <Stack.Screen
           name={Navkeys.IMAGE}

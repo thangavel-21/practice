@@ -6,7 +6,7 @@ const initialState = {
     phoneNumber: '',
     fileUri: '',
     address: '',
-  },
+  }
 };
 const createReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,7 +18,7 @@ const createReducer = (state = initialState, action) => {
     case user.SET_USER_TOKEN:
       return {
         ...state,
-        successFunc: action.payload,
+        userToken: action.payload,
       };
 
     default:

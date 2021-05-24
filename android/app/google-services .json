@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "107587682355",
+    "project_id": "login-c491d",
+    "storage_bucket": "login-c491d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107587682355:android:02cda61e17df71076fe346",
+        "android_client_info": {
+          "package_name": "com.calculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107587682355-tfjil2vq06jpnb386e7kjbdqsfbdf0j7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.calculator",
+            "certificate_hash": "f108fce209c060baf8a71d70a8787ca0046a50e2"
+          }
+        },
+        {
+          "client_id": "107587682355-55oh4o0t9pcp9bf3lveff8u0l4hl21av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWOOhjNLEqzfUJm-1Dxyz02alMaOOQw6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107587682355-55oh4o0t9pcp9bf3lveff8u0l4hl21av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

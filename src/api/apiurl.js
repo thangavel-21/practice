@@ -5,4 +5,5 @@ export default {
 
   //END POINT URL
   LOGIN: 'login',
+  PAGE:'users?page='
 };
