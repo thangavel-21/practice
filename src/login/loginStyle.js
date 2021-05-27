@@ -35,6 +35,22 @@ export default StyleSheet.create({
     marginLeft: wp(7.73),
     marginRight: wp(7.2),
   },
+  fb: {
+    padding: 12.5,
+    borderColor: 'rgb(66,133,244)',
+    backgroundColor: 'rgb(64,133,244)',
+    alignItems: 'center',
+    textAlign: 'center',
+    fontFamily: 'Roboto-Medium',
+    borderRadius: 2,
+    fontSize: 16,
+    color: 'rgb(255,255,255)',
+    height: 48,
+    width: 320,
+    marginTop: hp(-2.911),
+    marginLeft: wp(7.73),
+    marginRight: wp(7.2),
+  },
   googleImg:{
     marginTop: hp(-6.2),
     marginBottom: hp(5.48),
@@ -145,8 +161,6 @@ export default StyleSheet.create({
     marginTop: hp(-11),
      paddingBottom: 20
   },
-
-
   input: {
     width: 320,
     height: 48,

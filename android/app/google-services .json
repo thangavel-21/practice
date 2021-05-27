@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "107587682355-tfjil2vq06jpnb386e7kjbdqsfbdf0j7.apps.googleusercontent.com",
+          "client_id": "107587682355-jj3ohqppkuusbehsb4udib1eji6pq979.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.calculator",
-            "certificate_hash": "f108fce209c060baf8a71d70a8787ca0046a50e2"
+            "certificate_hash": "e585ce13994c5a27d8f551dbda545d8f59f06a43"
           }
         },
         {

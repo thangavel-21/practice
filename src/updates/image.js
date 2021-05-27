@@ -12,7 +12,6 @@ import imageString from '../constant/imageString'
 class image extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isUser: false,
       isAddress: false,

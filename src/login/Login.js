@@ -22,7 +22,9 @@ import {login} from '../saga/loginsaga';
 import loginString from '../constant/loginStrings';
 import {connect} from 'react-redux';
 import * as UserActions from '../redux/action/action';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+
 class Login extends Component {
   state = {
     email: '',
@@ -33,13 +35,13 @@ class Login extends Component {
     hasFocus: false,
     hasFocus1: false,
   };
-  // componentDidMount() {
-  //   GoogleSignin.configure({
-  //    webClientId:"107587682355-55oh4o0t9pcp9bf3lveff8u0l4hl21av.apps.googleusercontent.com",
-  //   });
-  // }
+  componentDidMount() {
+    GoogleSignin.configure({
+      webClientId:
+        '107587682355-jj3ohqppkuusbehsb4udib1eji6pq979.apps.googleusercontent.com',
+    });
+  }
 
-  
   setFocus(hasFocus) {
     this.setState({hasFocus});
   }
@@ -84,9 +86,57 @@ class Login extends Component {
         Alert.alert(failurefunc);
       },
       succfun => {
-        this.props.navigation.navigate(Navkeys.GPS);
+        this.props.navigation.navigate(Navkeys.IMAGE);
       },
     );
+  };
+  onGoogleButtonPress = async () => {
+    try {
+      // Get the users ID token
+      const {idToken} = await GoogleSignin.signIn();
+
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      // Sign-in the user with the credential
+      if (auth().signInWithCredential(googleCredential)) {
+        //this.props.setToken(idToken);
+        this.props.navigation.navigate(Navkeys.IMAGE);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  onFacebookButtonPress = async () => {
+    try {
+      // Attempt login with permissions
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+
+      // Once signed in, get the users AccesToken
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw 'Something went wrong obtaining access token';
+      }
+
+      // Create a Firebase credential with the AccessToken
+      const facebookCredential = auth.FacebookAuthProvider.credential(
+        data.accessToken,
+      );
+
+      // Sign-in the user with the credential
+      await auth().signInWithCredential(facebookCredential);
+      this.props.navigation.navigate(Navkeys.IMAGE);
+    } catch (error) {
+      console.log(error);
+    }
   };
   render() {
     return (
@@ -94,16 +144,24 @@ class Login extends Component {
         <Text style={styles.heading}>{loginString.CALIB_CRM}</Text>
 
         <TouchableOpacity
-          onPress={() => {
-            {
-              this.props.navigation.navigate('GOOGLE');
-            }
-          }}>
+          onPress={() =>
+            this.onGoogleButtonPress().then(() =>
+              console.log('Signed in with Google!'),
+            )
+          }>
           <Text style={styles.google}>{loginString.CONTINUE_WITH_GOOGLE}</Text>
           <Image
             source={require('../../src/constant/g.png')}
             style={styles.googleImg}
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            this.onFacebookButtonPress().then(() =>
+              console.log('Signed in with FaceBook!'),
+            )
+          }>
+          <Text style={styles.fb}>{loginString.CONTINUE_WITH_FACEBOOK}</Text>
         </TouchableOpacity>
 
         <View style={styles.view}>
